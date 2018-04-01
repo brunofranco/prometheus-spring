@@ -1,0 +1,21 @@
+#############################
+# Spring boot properties
+#############################
+
+info:
+  name: '@project.name@'
+  version: '@project.version@'
+
+server.port: 8100
+management:
+  server.port: 8101
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+        step: 1m
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,info,metrics,threaddump
+      base-path: /

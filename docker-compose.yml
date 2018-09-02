@@ -1,0 +1,27 @@
+# Compose file to simplify the build process of the Docker image for this service.
+version: "2.1"
+
+services:
+  prometheus-monitoring:
+    build:
+      context: ./spring-app
+      dockerfile: Dockerfile
+    volumes:
+      - "${PWD}/spring-app:/build"
+    ports:
+      - "8100:8100"
+      - "8101:8101"
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - "${PWD}/prometheus:/build"
+    ports:
+      - "3001:9090"
+    command:
+      - '--config.file=/build/prometheus.yml'
+
+  grafine:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"

@@ -2,16 +2,6 @@
 version: "2.1"
 
 services:
-  prometheus-monitoring:
-    build:
-      context: ./spring-app
-      dockerfile: Dockerfile
-    volumes:
-      - "${PWD}/spring-app:/build"
-    ports:
-      - "8100:8100"
-      - "8101:8101"
-
   prometheus:
     image: prom/prometheus
     volumes:
@@ -23,5 +13,7 @@ services:
 
   grafine:
     image: grafana/grafana
+    volumes:
+      - "${PWD}/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml"
     ports:
       - "3000:3000"
